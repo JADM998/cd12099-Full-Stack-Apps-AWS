@@ -18,6 +18,15 @@ For localhost testing use this url: http://localhost:8082/filteredimage?image_ur
 ### Elastic Beanstalk.
 The domain for beanstalk is this one: http://my-image-processing-microservice-submis.us-east-1.elasticbeanstalk.com?image_url='imageURL'
 
+### Samples
+#### Valid responses
+1. http://my-image-processing-microservice-submis.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://i.pinimg.com/736x/c6/82/44/c68244f5e077b7f33b627c3afc739f2b.jpg
+2. http://my-image-processing-microservice-submis.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://upload.wikimedia.org/wikipedia/commons/b/bd/Golden_tabby_and_white_kitten_n01.jpg
+
+#### Unprocessable responses
+1. http://my-image-processing-microservice-submis.us-east-1.elasticbeanstalk.com/filteredimage?image_url=sometext (422)
+2. http://my-image-processing-microservice-submis.us-east-1.elasticbeanstalk.com/filteredimage (400)
+
 ## License
 
 [License](LICENSE.txt)
