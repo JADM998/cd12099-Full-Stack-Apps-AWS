@@ -31,6 +31,10 @@ import axios from "axios";
       })
       let photoBuffer;
       try{
+        /**
+         * I decided to conver the response.data to a Buffer object using binary to pass to a Jimp.reader.
+         * I get the idea from this link: https://www.fabiofranchino.com/log/get-the-image-buffer-using-axios-and-nodejs/
+         */
         photoBuffer = Buffer.from(photoResponse.data, "binary");
       }catch(error){
         reject({message: `Unable to process response from ${inputURL}`});
