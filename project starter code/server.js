@@ -45,7 +45,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
       }).catch((error) => {
         return res.status(500).json({
           message: "Internal Error",
-          error: error
+          error: error,
+          image_path: image_url
         })
       });
       

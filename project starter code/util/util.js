@@ -1,5 +1,6 @@
 import fs from "fs";
 import Jimp from "jimp";
+import axios from "axios";
 
 
 // filterImageFromURL
@@ -12,7 +13,30 @@ import Jimp from "jimp";
  export async function filterImageFromURL(inputURL) {
   return new Promise(async (resolve, reject) => {
     try {
-      const photo = await Jimp.read(inputURL);
+      /**
+       * This line of code was obtained while searching on Udacity Knowledge Q & A while gettin the error: Could not find MIME for Buffer
+       * at downloading the image of test from wikimedia.
+       * 
+       * Link of the specific question: https://knowledge.udacity.com/questions/1026717
+       * 
+       */
+      const photoResponse = await axios.get(inputURL, {
+        responseType: "arraybuffer"
+      });
+      
+      if(photoResponse.status !== 200) reject({
+        message: `Unable to download the photo from url ${inputURL}`,
+        responseStatus: photoResponse.status,
+        response: photoResponse.data
+      })
+      let photoBuffer;
+      try{
+        photoBuffer = Buffer.from(photoResponse.data, "binary");
+      }catch(error){
+        reject({message: `Unable to process response from ${inputURL}`});
+      }
+        
+      const photo = await Jimp.read(photoBuffer);
       const outpath =
         "/tmp/filtered." + Math.floor(Math.random() * 2000) + ".jpg";
       await photo
