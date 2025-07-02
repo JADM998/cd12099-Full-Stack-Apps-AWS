@@ -43,8 +43,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
         setTimeout(() => deleteLocalFiles(pathsToDelete), 15000);
         return res.status(200).sendFile(output_path);
       }).catch((error) => {
-        return res.status(500).json({
-          message: "Internal Error",
+        return res.status(422).json({
+          message: "Unprocessable Content",
           error: error,
           image_path: image_url
         })
