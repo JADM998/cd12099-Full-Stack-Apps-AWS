@@ -30,6 +30,26 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util.js';
     /**************************************************************************** */
 
   //! END @TODO1
+
+  app.get("/filteredImage", (req, res) => {
+    const {image_url} = req.query;
+    if(!image_url) return res.status(400).json({message: "image_url query parameter was not provided"});
+    const pathsToDelete = [];
+
+    filterImageFromURL(image_url)
+      .then((output_path) => {
+        pathsToDelete.push(output_path);
+        //To wait for the file to be transfered
+        setTimeout(() => deleteLocalFiles(pathsToDelete), 15000);
+        return res.status(200).sendFile(output_path);
+      }).catch((error) => {
+        return res.status(500).json({
+          message: "Internal Error",
+          error: error
+        })
+      });
+      
+  });
   
   // Root Endpoint
   // Displays a simple message to the user
